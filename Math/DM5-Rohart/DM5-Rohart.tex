@@ -1,0 +1,175 @@
+\documentclass[a4paper, french, twoside]{article}
+
+% import des packages de base
+\usepackage[latin1]{inputenc}	% pour le codage 
+\usepackage[T1]{fontenc}		% pour la police (et donc les accents)
+\usepackage[french]{babel}	% pour les commandes en français
+\frenchbsetup{StandardLists=true} % à inclure si on utilise \usepackage[french]{babel}
+\usepackage{textcomp}		% pour afficher correctement l'apostrophe
+\usepackage{lmodern}		% Pour changer le pack de police
+\usepackage[left=3cm, right=3cm, bottom=3cm]{geometry}	% pour personaliser les marges
+\usepackage{graphicx}		% pour inclure des images
+\usepackage{fancybox}		% pour les boites aux bords arrondie
+\usepackage{amsmath}		% pour des commandes mathématiques (surtout l'alignement)
+\usepackage{amssymb}		% pour la notation des ensembles mathématiques (ensembles des entiers naturels)
+\usepackage{mathrsfs}		% pour les lettres calligraphiques anglaise
+
+
+
+
+
+
+
+% En-tête/Pieds de page
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+	% En-tête
+\renewcommand{\headrulewidth}{0.4pt}	% Trait de séparation (mettre 0pt pour la retirer)
+\fancyhead[L]{I.S.E.P 2019-2020}
+\fancyhead[C]{Devoir libre n°5}
+\fancyhead[R]{SPÉ}
+	% Pieds de page
+\renewcommand{\footrulewidth}{0.4pt}	% Trait de séparation (mettre 0pt pour la retirer)
+\fancyfoot[L]{M. Popot--Chapuis/ V. Colin / M. Partensky}
+\fancyfoot[C]{}
+\fancyfoot[R]{Page \thepage}
+
+
+
+\begin{document}
+
+\begin{center}
+\huge
+Devoir Maison n°5\\
+\Huge
+Autour du laplacien
+\end{center}
+\hrule
+
+
+\part{Mise en bouche}
+(partie rédigée par Maxime)
+
+\part{Fonctions radiales harmoniques}
+
+
+\begin{enumerate}
+	\item 
+        		\begin{enumerate}
+            		\item (partie rédigée par Maxime)
+            		\item (partie rédigée par Maxime)
+        		\end{enumerate}
+    	\item 
+		\begin{enumerate}
+            		\item Puisque la norme euclidienne ($\| x\| = \sqrt{x_1^2 + ... + x_k^2 + ... + x_{n}^2}$ où $x_k$ est la $k$-ième coordonnée de $x$) est de classe $\mathscr{C}^2$ par rapport à chaque variable sur $\mathbb{R}_{+}^{*}$ et que $f$ est de classe $\mathscr{C}^2$ alors $\varphi$ est de classe $\mathscr{C}^2$ sur $\mathbb{R}_{+}^{*}$
+            		\item {Notons $N$ la norme euclidienne. On a alors: \\
+\[\forall x \in \mathbb{R}^n \quad \dfrac{\partial N}{\partial x_k}(x) = 2 x_k . \dfrac{1}{2}(x_1^2+...+x_n^2)^{-\frac{1}{2}} = \dfrac{x_k}{\sqrt{x_1^2+...+x_n^2}} = \dfrac{x_k}{\| x\|}\]
+Ainsi
+\[\dfrac{\partial f}{\partial x_k} = \dfrac{\partial (\varphi \circ N)}{\partial x_k} = (\varphi' \circ N).\dfrac{\partial N}{\partial x_k}\]}
+			\item {En dérivant le produit ci-dessus, on obtient:
+\[\dfrac{\partial^2 f}{\partial x_k^2} =  (\varphi' \circ N).\dfrac{\partial^2 N}{\partial x_k^2} + \left((\varphi'' \circ N).\dfrac{\partial N}{\partial x_k}\right).\dfrac{\partial N}{\partial x_k}\]
+
+D'où
+\[\dfrac{\partial^2 f}{\partial x_k^2} = (\varphi' \circ N).\dfrac{\partial^2 N}{\partial x_k^2} + (\varphi'' \circ N).\left(\dfrac{\partial N}{\partial x_k}\right)^2\]
+
+Puisque le Laplacien s'écrit:
+\[\Delta f = \sum_{k=1}^{n} \dfrac{\partial^2 f}{\partial x_k^2}\]
+
+Alors
+\[\Delta f =  (\varphi' \circ N).\sum_{k=1}^{n}\dfrac{\partial^2 N}{\partial x_k^2} + (\varphi'' \circ N).\sum_{k=1}^{n}\left(\dfrac{\partial N}{\partial x_k}\right)^2\]
+On remarque bien évidemment la forme obtenue dans la première partie
+\[\Delta (\varphi \circ N) = (\varphi' \circ N).\Delta N + (\varphi'' \circ N).\| \nabla N\|^2 \]
+
+\newpage
+Calculons à présent $\| \nabla N\|^2$ et $\Delta N$.\\
+On a vu que \[\dfrac{\partial N}{\partial x_k}(x) = \dfrac{x_k}{\|x\|}\]
+D'où
+\[\nabla N(x) = 
+\begin{pmatrix}
+\dfrac{x_1}{\|x\|} \\[2mm]
+\vdots 		 \\[2mm]
+\dfrac{x_n}{\|x\|} \\
+\end{pmatrix}  \]
+
+Ainsi
+\begin{eqnarray*}
+\|\nabla N(x)\|^2 &=& \left<\nabla N(x) | \nabla N(x)\right>\\
+ 			 &=& \sum_{k=1}^{n}\dfrac{x_k^2}{\|x\|^2}\\
+ 			 &=& \dfrac{1}{\|x\|^2}\sum_{k=1}^{n}x_k^2\\
+		     	 &=& \dfrac{\|x\|^2}{\|x\|^2}\\
+		     	 &=& 1
+\end{eqnarray*} \\
+
+Ensuite calculons $\Delta N$\\
+On obtient déjà que (dériver d'un quotient):
+\[\forall x \in \mathbb{R}^n \quad \dfrac{\partial^2 N}{\partial x_k^2}(x) = \dfrac{1.N(x)-x_k.\frac{x_k}{N(x)}}{N(x)^2} = \dfrac{N(x)^2-x_k^2}{N(x)^3}\] 
+
+Ainsi
+\begin{eqnarray*}
+\Delta N(x) &=& \sum_{k=1}^{n}\dfrac{\partial^2 N}{\partial x_k^2}(x)\\
+ 	      &=& \sum_{k=1}^{n}\dfrac{\|x\|^2-x_k^2}{\|x\|^3}\\
+ 	      &=& \dfrac{1}{\|x\|^3}\left(n\|x\|^2-\|x\|^2\right)\\
+	      &=& \dfrac{n-1}{\|x\|}
+\end{eqnarray*} \\
+
+Finalement on a:
+\[\forall x \in \mathbb{R}^n \quad \Delta f(x) = \varphi''(\|x\|) + \dfrac{n-1}{\|x\|}\varphi'(\|x\|) \]}
+        		\end{enumerate}
+		
+\newpage
+    	\item {Soit $f$ un fonction radiale harmonique et $x$ un vecteur de $\mathbb{R}^n$. On a donc $\Delta f = 0$.\\
+Or d'après la première partie on connait la forme du laplacien d'une composée.
+\[\Delta f(x) = \varphi''(\|x\|) + \dfrac{n-1}{\|x\|}\varphi'(\|x\|)\] \\
+On a donc, en posant $r = \|x\|$ \[\varphi''(r) + \dfrac{n-1}{r}\varphi'(r) = 0\]
+On remarque l'écriture d'un équation différentielle du second ordre sans terme non-dérivé. On peut donc poser $\omega = \varphi'$. Ainsi on a
+\[\omega'+ \dfrac{n-1}{r}\omega = 0 \]
+$\omega(r) = \dfrac{1}{r^{n-1}}$ est une solution particulière de l'équation différentielle.\\
+Ainsi \[ \varphi'(r) = \dfrac{\lambda}{r^{n-1}} \qquad\text{avec}\quad \lambda \in \mathbb{R}\]
+En primitivant $\varphi'$ on obtient: \\
+Par cas:
+\begin{itemize}
+	\item {Si n = 2:\\
+Alors \[\varphi' = \dfrac{\lambda}{r}\]
+Donc \[f(x) = \varphi(r) = \lambda.ln(r) + \mu \quad\text{avec $\lambda$ et $\mu$ des réels}\]
+}
+	\item{Si n > 2:\\
+Alors \[\varphi' = \dfrac{\lambda}{r^{n-1}}\]
+Donc \[f(x) = \varphi(r) = \dfrac{\lambda}{(2-n).r^{n-2}} + \mu \quad\text{avec $\lambda$ et $\mu$ des réels}\]
+}
+\end{itemize}
+
+Conclusion: \\
+Les fonctions radiales harmoniques sont:
+\begin{equation*}
+\boxed{f(x) = \lambda.ln(r) + \mu} \tag{n = 2}
+\end{equation*}
+Ou
+\begin{equation*}
+\boxed{f(x) = \dfrac{\lambda}{(2-n).r^{n-2}} + \mu} \tag{n > 2}
+\end{equation*}
+
+
+} % fin de la question 3)
+\end{enumerate}
+
+
+\part{Laplacien et isométries}
+
+(partie rédigée par Marc)
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,306 @@
+\documentclass[a4paper, french, twoside]{article}
+
+% import des packages de base
+\usepackage[latin1]{inputenc}	% pour le codage 
+\usepackage[T1]{fontenc}		% pour la police (et donc les accents)
+\usepackage[french]{babel}	% pour les commandes en français
+\usepackage{textcomp}		% pour afficher correctement l'apostrophe
+\usepackage{lmodern}		% Pour changer le pack de police
+\usepackage[left=3cm, right=3cm, bottom=3cm]{geometry}	% pour personaliser les marges
+\usepackage{graphicx}		% pour inclure des images
+\usepackage{fancybox}		% pour les boites aux bords arrondie
+\usepackage{amsmath}		% pour des commandes mathématiques (surtout l'alignement)
+\usepackage{amssymb}		% pour la notation des ensembles mathématiques (ensembles des entiers naturels)
+\usepackage{esint}			% pour les intégrales fermés
+\usepackage{shuffle}			% pour le symbole du peigne de Dirac (avec la commande \shuffle ou \cshuffle)
+\usepackage{boiboites}		% test pour encadrer de jolie théorèmes/formule comme Mme. Kraeutler
+%\usepackage{xeboiboites}		% test pour encadrer de jolie théorèmes/formule comme Mme. Kraeutler
+
+
+
+% Commande pour taper des coordonnées en colonne
+\newcommand*{\coordSystLLL}[4]{% 
+	\ensuremath{#1\,
+		\left\{ 
+      			\begin{matrix} 
+        				#2 \\[5mm]
+        				#3 \\[5mm]
+				#4
+      			\end{matrix}  
+   		 \right.% Ne pas oublier le délimiteur invisible. 
+  	}}
+\newcommand*{\coordSystLL}[3]{% 
+	\ensuremath{#1\,
+		\left\{ 
+      			\begin{matrix} 
+        				#2 \\[5mm]
+        				#3
+      			\end{matrix}  
+   		 \right.% Ne pas oublier le délimiteur invisible. 
+  	}}
+\newcommand*{\coordSystL}[2]{% 
+	\ensuremath{#1\,
+		\left\{ 
+      			\begin{matrix} 
+        				#2
+      			\end{matrix}  
+   		 \right.% Ne pas oublier le délimiteur invisible. 
+  	}}
+
+% Permet de définir des fonction par cas (2 cas ici)
+\newcommand*{\fonctionParCas}[4]{%
+	\ensuremath{#1\,
+		\left\{ 
+      			\begin{tabular} {c l}
+        				$#2$ & \text{si}~$#3$ \\[5mm]
+				$#4$ & \text{sinon}
+      			\end{tabular}
+   		 \right.% Ne pas oublier le délimiteur invisible. 
+	}}
+
+
+
+% Permet de personnaliser les encadrement de définition/théorème/proposition
+\newboxedtheorem[boxcolor=orange, background=white, titlebackground=blue!20,
+titleboxcolor = black, headfont=\bfseries, thcounter=section]{definition}{Définition}{defCounter}
+
+\newboxedtheorem[boxcolor=orange, background=white, titlebackground=blue!20,
+titleboxcolor = black, headfont=\bfseries, thcounter=section]{theorem}{Théorème}{thCounter}
+
+\newboxedtheorem[boxcolor=orange, background=white, titlebackground=blue!20,
+titleboxcolor = black, headfont=\bfseries, thcounter=section]{proposition}{Proposition}{propCounter}
+
+
+
+% Pour définir l'opérateur différentielle dx avec une d droit (dans une intégrale par exemple)
+\newcommand{\dif}{\mathop{}\!\mathrm{d}}
+
+
+% Page de garde
+\title{Analyse, Transformée et Intégrale de Fourier}
+\author{Valentin COLIN}
+\date{}
+
+% En-tête/Pieds de page
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+	% En-tête
+\renewcommand{\headrulewidth}{0.4pt}	% Trait de séparation (mettre 0pt pour la retirer)
+\fancyhead[L]{I.S.E.P 2019-2020}
+\fancyhead[C]{Fourier}
+\fancyhead[R]{SPÉ 2}
+	% Pieds de page
+\renewcommand{\footrulewidth}{0.4pt}	% Trait de séparation (mettre 0pt pour la retirer)
+\fancyfoot[L]{V. COLIN}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\today}
+
+% CORPS DU DOCUMENT
+\begin{document}
+\maketitle
+\begin{center}
+	\includegraphics{FOURIER_PI.jpg}
+\end{center}
+%\newpage \tableofcontents % Table des matières
+
+\newpage
+\part*{Analyse de Fourier}
+\section{Série de Fourier}
+\subsection{Représentation réelle}
+
+Toute fonction f~:~$T_{0}$-périodique ne présentant qu'un nombre fini de discontinuité (dénombrable sur une période) peut être décomposée en série de Fourier, sous la forme:
+
+\begin{equation*}
+\boxed{f(t) = a_{0} + \sum_{n=1}^{\infty}\left\Big(a_{n}\cos(n\omega_{0} t) + b_{n}\sin(n\omega_{0} t)\right)} \tag{*}
+\end{equation*}
+Ou
+\begin{equation*}
+\boxed{f(t) = \frac{a_{0}}{2} + \sum_{n=0}^{\infty}\left\Big(a_{n}\cos(n\omega_{0} t) + b_{n}\sin(n\omega_{0} t)\right)} \tag{**}
+\end{equation*}
+
+Rappel: $\omega_0 = \frac{2\pi}{T_0}$
+
+Où les $a_{n}$ et $b_{n}$ sont appelés les coefficients de Fourier
+
+\begin{equation*}
+\tag{*}
+\coordSystLLL{avec}
+{a_{0} = \dfrac{1}{T}\displaystyle\int_{0}^{T} f(t) \dif t}
+{\forall n \in \mathbb{N}^{*}\quad a_{n} = \dfrac{2}{T}\displaystyle\int_{0}^{T} f(t)\cos(n\omega_{0} t) \dif t}
+{\forall n \in \mathbb{N}^{*}\quad b_{n} = \dfrac{2}{T}\displaystyle\int_{0}^{T} f(t)\sin (n\omega_{0} t) \dif t}
+\end{equation*}
+Ou
+\begin{equation*}
+\tag{**}
+\coordSystLL{avec}
+{\forall n \in \mathbb{N}\quad a_{n} = \dfrac{2}{T}\displaystyle\int_{0}^{T} f(t)\cos(n\omega_{0} t) \dif t}
+{\forall n \in \mathbb{N}\quad b_{n} = \dfrac{2}{T}\displaystyle\int_{0}^{T} f(t)\sin (n\omega_{0} t) \dif t}
+\end{equation*}
+
+\underline{Remarque:}
+\newline
+\begin{itemize}
+\item Pour (**) $b_{0}=0$
+\item Si la fonction f est \underline{paire}\hspace{15pt} $\Rightarrow$ $\forall n \in \mathbb{N}\quad b_{n} = 0$ 
+\item Si la fonction f est \underline{impaire}\hspace{4pt} $\Rightarrow$ $\forall n \in \mathbb{N}\quad a_{n} = 0$
+\item $\omega_0$ s'appelle la fondamentale
+\item Pour $n > 1\quad \omega_n = n\omega_0$ s'appelle l'harmonique de rang n
+\end{center}
+
+\newpage
+\subsection{Représentation complexe}
+En représentation complexe:\newline
+Puisque $e^{i\omega t} = \cos(\omega t) + i\sin(\omega t)$, on écrira:
+
+\begin{equation*}
+f(t) = \sum_{n = -\infty}^{+\infty} C_{n}e^{in\omega_{0} t}
+\end{equation*}
+Où les $C_n$ sont les coefficients de Fourier complexes
+\begin{equation*}
+\coordSystL{avec}{C_n = \dfrac{1}{T}\displaystyle\int_{0}^{T} f(t) e^{in\omega_{0} t} \dif t}
+\end{equation*}
+\begin{equation*}
+\coordSystLLL{remarque}
+{C_0 = a_0}
+{\underset{n \geq 1}{C_n} = \frac{1}{2}(a_n - b_n)}
+{\underset{n \leq -1}{C_n} = \frac{1}{2}(a_{-n} + b_{-n})}
+\end{equation*}
+
+\newpage
+\part*{Tranformée ou Intégrale de Fourier}
+\section{Intégrale de Fourier}
+
+Soit f une fonction non périodique\newline
+À partir de f on construit une fonction $f_{T_0}$ ($T_{0}$-périodique) ayant pour image la fonction f sur une période $T_0$\newline
+On peut donc developper $f_{T_0}$ en série de Fourier\newline
+% insérer images
+"On va considérer qu'une fonction non périodique "est" une fonction périodique de période $\infty$"\newline
+Puis on ferra tendre $T_0$ vers $\infty$
+
+\begin{equation*}
+\coordSystLL{\text{On developpe}~f_{T_0}}
+{f_{T_0}(t) = \displaystyle\sum_{n = -\infty}^{+\infty} C_{n}  e^{in\omega_{0} t}}
+{C_n = \dfrac{1}{T_0}\displaystyle\int_{0}^{T_0} f_{T_0}(t) e^{in\omega_{0} t} \dif t}
+\end{equation*}
+
+\begin{align*}
+	\begin{split}
+	f_{T_0}(t) &= \sum_{n = -\infty}^{+\infty} \left(\frac{1}{T_0}\int_{0}^{T_0} f_{T_0}(t') e^{in\omega_{0} t'} \dif t'\right)  e^{in\omega_{0} t} \\
+ 		       &= \sum_{n = -\infty}^{+\infty} \left(\frac{1}{T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}} f_{T_0}(t') e^{in\omega_{0} t'} \dif t'\right)  e^{in\omega_{0} t} 
+	\end{split}
+\end{align*}
+
+Posons $\omega_n = n\omega_0$\newline
+et calculons $\omega_{n+1}-\omega_n = \omega_0 = \frac{2\pi}{T_0}$\newline
+\newline
+Si $T_0 \longrightarrow \infty$ alors $\omega_{n+1}-\omega_n \longrightarrow 0$\newline
+On va remplacer l'écriture discrète $\omega_n$ par une variable continue $\omega$ telle que $\omega_{n+1}-\omega_n = \dif \omega$
+\[\dif \omega = \frac{2\pi}{T_0} \Rightarrow \frac{1}{T_0} = \frac{\dif \omega}{2\pi}\]
+\[\left(\sum_{n = -\infty}^{+\infty} \longrightarrow \int_{-\infty}^{+\infty}\right)\]
+Donc
+\[f_{T_0} \underset{T_0 \longrightarrow \infty}{\longrightarrow} f\]
+Ainsi
+\[f(t) = \int_{-\infty}^{+\infty} \left(\frac{\dif \omega}{2\pi}\int_{-\infty}^{+\infty}f(t')e^{-i\omega t'}\dif t'\right)e^{i\omega t}\]
+On pose alors la transformée (ou l'intégrale) de Fourier (notation: $\overset{\sim}{f}(\omega) = TF(f) = \mathcal{F}(f)$):
+\begin{center}
+	\Ovalbox{\[\overset{\sim}{f}(\omega) = \dfrac{1}{\sqrt{2\pi}}\displaystyle\int_{-\infty}^{+\infty}f(t)e^{-i\omega t}\dif t\]}
+\end{center}
+Et la transformée de Fourier inverse (notation: $TF^{-1}(f) = \mathcal{F}^{-1}(f)$):
+\begin{center}
+	\Ovalbox{\[\overset{}{f}(t) = \dfrac{1}{\sqrt{2\pi}}\displaystyle\int_{-\infty}^{+\infty}\overset{\sim}{f}(\omega)e^{i\omega t}\dif \omega\]}
+\end{center}
+\begin{itemize}
+\item Attention aux signes dans l'exponentielle (qui sont d'ailleurs intervertible)
+\item $\overset{\sim}{f}(\omega)$ correspond aux coefficients de Fourier
+\item L'exponentielle de la $TF^{-1}$ correspond à une somme de fonctions sinusoïdales
+\item ATTENTION: dans le formalisme de la $TF^{-1}$ il y a des \underline{pulsations négatives}
+\end{itemize}
+
+\section{Propriétés importantes}
+\subsection{Série de Fourier}
+Soit f un fonction T-périodique
+\begin{equation*}
+\text{Égalité de Bessel-Parceval} : \dfrac{1}{T}\displaystyle\int_{t_0}^{t_0 + T} |f(t)|^2 \dif t = \displaystyle\sum_{n = -\infty}^{+\infty} |C_{n}|^2
+\end{equation*}
+
+\subsection{Transformée de Fourier}
+Soit f une fonction (non périodique)
+\begin{equation*}
+\text{Égalité de Parceval-Placherel} : \displaystyle\int_{-\infty}^{+\infty} |f(t)|^2 \dif t = \displaystyle\int_{-\infty}^{+\infty} |\overset{\sim}{f}(\omega)|^2 \dif \omega
+\end{equation*}
+
+\subsection{produit de convolution}
+
+1) La TF d'un produit de convolution est égal au produit des TF des fonctions
+\[TF(f\circledast g) = TF(f) . TF(g)\]
+\indent2) La TF d'un produit de fonctions est égal au produit de convolution des TF
+\[TF(f.g) = TF(f) \circledast  TF(g)\]
+
+
+\newpage
+\section{Quelques exemples}
+
+\subsection{Distribution de Dirac}
+
+\subsubsection{Définition de la distribution de Dirac}
+Soit $f_k$ à valeur réelle définie par 
+\begin{equation*}
+\fonctionParCas{f_{k}(x) =}
+{\dfrac{1}{2k}}{|x| < k}
+{0}
+\end{equation*}
+\begin{equation*}
+\text{tel que :}~\int_{-\infty}^{+\infty} f_{k}(x) \dif x = 1
+\end{equation*}
+
+La distribution $\delta$ de Dirac dans ce cas correspond à la limite de $f_k$ quand $k \longrightarrow 0$
+\[\delta (x) = \lim_{k \rightarrow 0} f_{k}(x)\]
+$\delta$ n'as de valeur qu'au voisinage de 0, d'où:
+\[\int_{-\infty}^{+\infty}f(x)\delta (x) \dif x \approx f(0)\]
+En généralisant:
+\[\int_{-\infty}^{+\infty}f(x)\delta (x-a) \dif x \approx f(a)\]
+
+\subsubsection{Calcul de la TF d'un Dirac}
+
+\begin{align*}
+	\begin{split}
+	 	TF(\delta) &= \int_{-\infty}^{+\infty} \delta(t)e^{-i\omega t}\dif t \\
+ 				&\approx  e^0 \underbrace{\int_{-\infty}^{+\infty} \delta(t)\dif t}_{= 1} \\
+				&\approx 1
+	\end{split}
+\end{align*}
+
+\begin{align*}
+	\begin{split}
+	 	TF(\delta(t-t_a)) &= \int_{-\infty}^{+\infty} \delta(t-t_a)e^{-i\omega t}\dif t \\
+ 				&\approx e^{-i\omega t_a} \underbrace{\int_{-\infty}^{+\infty} \delta(t-t_a)\dif t}_{= 1} \\
+				&\approx e^{-i\omega t_a}
+	\end{split}
+\end{align*}
+
+\newpage
+\subsection{Peigne de Dirac}
+
+\subsubsection{Définition}
+Une peigne de Dirac de période T (noté $\shuffle_T$) est défini par:
+\[\shuffle_T(t) \overset{def}{=} \sum_{k = -\infty}^{+\infty} \delta_{kT}(t) = \sum_{k = -\infty}^{+\infty} \delta(t-kT)\]
+
+\subsubsection{Calcul de la TF d'un peigne de Dirac}
+
+\begin{align*}
+	\begin{split}
+	 	TF(\shuffle_{T_0}) &= \int_{-\infty}^{+\infty} \shuffle(t)e^{-i\omega t}\dif t \\
+ 				  	     & \qquad \vdots \\
+					     &= \frac{1}{T_0}\sum_{k = -\infty}^{+\infty}\delta\left(\nu-\frac{k}{T_0}\right)\\
+					     &= \frac{1}{T_0}\shuffle_{\frac{1}{T_0}}(\nu) \quad\text{avec $\nu = \frac{1}{T}$ et $T = \frac{1}{2\pi\omega}$}
+	\end{split}
+\end{align*}
+
+
+\end{document}
+
+
+
+
+
+

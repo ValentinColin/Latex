@@ -1,0 +1,612 @@
+\documentclass[a4paper, french, twoside]{article}
+
+% import des packages de base
+\usepackage[latin1]{inputenc}	% Pour le codage 
+\usepackage[T1]{fontenc}		% Pour la police (et donc les accents)
+\usepackage[french]{babel}	% Pour les commandes en français
+\usepackage{textcomp}		% Pour afficher correctement l'apostrophe
+%\usepackage{layout}		% Le layout permet d'afficher le gabarit de mise en page d'un document.
+%\usepackage{eurosym}		% Symbole euro
+
+%..............Police..............% (n'en utiliser qu'un seul à la fois)
+% Pour changer le pack de police
+%\usepackage{bookman}
+%\usepackage{charter}
+%\usepackage{newcent}
+\usepackage{lmodern}
+%\usepackage{mathpazo}
+%\usepackage{mathptmx}
+
+\usepackage[left=3cm, right=3cm, bottom=3cm]{geometry}	% Les commandes de ce package permettent de régler finement les marges.
+%\usepackage{setspace}		% Interligne
+\usepackage{graphicx}		% Pour inclure des images
+%\usepackage{wrapfig}		% Insertion d'image dans un paragraphe (à utiliser en dernier recours)
+
+%..............Mathématique..............%
+\usepackage{amsmath}		% Pour des commandes mathématiques (surtout l'alignement)
+%\usepackage{amssymb}
+%\usepackage{mathrsfs}
+%\usepackage{asmthm}		% Packages mathématiques: théorèmes
+\usepackage{fourier}			% Pour utiliser \square (D'Alembertien)
+\usepackage{esint}			% Pour les intégrales fermés
+\usepackage{boiboites}		% Test pour encadrer de jolie théorèmes/formule comme Mme. Kraeutler
+
+\usepackage{slashbox}		% Pour couper une cellule de tableau en diagonal
+\usepackage{fancybox}		% Pour les boites aux bords arrondie
+%\usepackage{fancyhdr}		% Importer plus bas, lors de la configuration des en-têtes et pieds de page
+\usepackage{multicol}		% Permet d'écrire sur plusieurs colonnes (division vertical de la page)
+%\usepackage{soul}			% Soulignement/barrer du texte...
+%\usepackage{ulem}		% Soulignement/...
+%\usepackage{url}			% Citer des liens urls
+%\usepackage{verbatim}		% Citation de code
+%\usepackage{moreverb}		% Citation de code
+%\usepackage{listings}		% Citation de code coloré (ne pas oublier de paramétrer correctement \lstset)
+%\usepackage{color}		% Colorer du texte 
+%\usepackage{colortbl}		% Colorer du texte dans un tableau
+%\usepackage{makeidx}		% Création d'index
+
+
+
+
+% Commande pour taper des coordonnées en colonne
+\newcommand*{\Coord}[4]{% 
+	\ensuremath{#1\,
+		\left\lvert 
+      			\begin{matrix} 
+        				#2 \\[5mm]
+        				#3 \\[5mm]
+				#4
+      			\end{matrix}  
+   		 \right.% Ne pas oublier le délimiteur invisible. 
+  	}}
+
+% Permet de personnaliser les encadrement de définition/théorème/loi
+\newboxedtheorem[boxcolor=orange, background=white, titleboxcolor = black, headfont=\bfseries, thcounter=section]{proposition}{Proposition}{PropCounter}
+\newboxedtheorem[boxcolor=orange, background=white, titleboxcolor = black, headfont=\bfseries, thcounter=section]{law}{Loi}{LCounter}
+
+% Pour définir l'opérateur différentielle dx avec une d droit (dans une intégrale par exemple)
+\newcommand{\dif}{\mathop{}\!\mathrm{d}}
+
+% Pour simplifier le commande \overrightarrow en \vect
+\newcommand{\vect}[1]{\overrightarrow{#1}}
+
+
+% Page de garde
+\title{Formulaire d'analyse vectorielle et d'Électromagnétisme}
+\author{Valentin COLIN}
+\date{}
+
+% En-tête/Pieds de page
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+	% En-tête
+\renewcommand{\headrulewidth}{0.4pt}	% Trait de séparation (mettre 0pt pour la retirer)
+\fancyhead[L]{I.S.E.P 2019-2020}
+\fancyhead[C]{formulaire}
+\fancyhead[R]{PSI}
+	% Pieds de page
+\renewcommand{\footrulewidth}{0.4pt}	% Trait de séparation (mettre 0pt pour la retirer)
+\fancyfoot[L]{V. COLIN}
+\fancyfoot[C]{\thepage/\pageref{lastpage}}
+\fancyfoot[R]{\today}
+
+\AtEndDocument{\label{lastpage}}
+
+% CORPS DU DOCUMENT
+\begin{document}
+\maketitle
+\begin{center}
+	\includegraphics{IMAGES/garde.png}
+\end{center}
+%\newpage \tableofcontents % Table des matières
+
+\newpage
+\section{Coordonnées orthogonales}
+
+\subsection{Coordonnées cartésiennes}
+\begin{center}
+	\includegraphics{IMAGES/coord-cartesien.png}
+\end{center}
+\begin{itemize}
+	\item base : $\widehat{e_{x}},\widehat{e_{y}},\widehat{e_{z}}$
+	\item coordonnées : x,y,z
+	\item déplacement élémentaire : \[\vect{\dif l} = \dif x~\widehat{e_{x}} + \dif y~\widehat{e_{y}} + \dif z~\widehat{e_{z}}\]
+\end{itemize}
+
+\subsection{Coordonnées cylindriques}
+\begin{center}
+	\includegraphics{IMAGES/coord-cylindrique.png}
+\end{center}
+\begin{itemize}
+	\item base : $\widehat{e_{\rho}},\widehat{e_{\varphi}},\widehat{e_{z}}$
+	\item coordonnées : $\rho,\varphi,z$
+	\item déplacement élémentaire : \[\vect{\dif l} = \dif\rho~\widehat{e_{\rho}} + \rho~\dif\varphi~\widehat{e_{\varphi}} + \dif z~\widehat{e_{z}}\]
+\end{itemize}
+
+\subsection{Coordonnées sphériques}
+\begin{center}
+	\includegraphics{IMAGES/coord-spherique.png}
+\end{center}
+\begin{itemize}
+	\item base : $\widehat{e_{r}},\widehat{e_{\theta}},\widehat{e_{\varphi}}$
+	\item coordonnées : $r,\theta,\varphi$
+	\item déplacement élémentaire : \[\vect{\dif l} = \dif r~\widehat{e_{r}} + r~\dif\theta~\widehat{e_{\theta}} + r\sin\theta~\dif\varphi~\widehat{e_{\varphi}}\]
+\end{itemize}
+
+\subsection{Notation générale}
+\begin{itemize}
+	\item base : $\widehat{e_{1}},\widehat{e_{2}},\widehat{e_{3}}$
+	\item coordonnées : $s_{1},s_{2},s_{3}$
+	\item déplacement élémentaire : \[\vect{\dif l} = \sum_{i=1}^{3} {\mu_{i}\dif s_{i}\widehat{e_{i}}} \]
+\end{itemize}
+où $\mu_{i}$ est le \underline{multiplicateur} de la coordonnée $s_{i}$.
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\backslashbox{repérage}{multiplicateurs} & $\mu_{1}$ & $\mu_{2}$ & $\mu_{3}$ \\
+\hline
+cartésien : $s_{1}$ = x, $s_{2}$ = y, $s_{3}$ = z & 1 & 1 & 1 \\
+\hline
+cylindrique : $s_{1}$ = $\rho$, $s_{2}$ = $\varphi$, $s_{3}$ = z & 1 & $\rho$ & 1 \\
+\hline
+sphérique : $s_{1}$ = r, $s_{2}$ = $\theta$, $s_{3}$ = $\varphi$ & 1 & r & r~$\sin\theta$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+\section{Expressions des opérateurs en coordonnées orthogonales}
+
+%-----------------------------------------  GRADIANT  -----------------------------------------
+\subsection{Gradiant}
+% Formule générale du gradiant
+\begin{center}
+	\doublebox{\Coord{\vect{\nabla}~f = \vect{grad}~f = \displaystyle\sum_{i}^{} \dfrac{1}{\mu_{i}}\dfrac{\partial f}{\partial s_{i}} \widehat{e_{i}} =~}{\dfrac{1}{\mu_{1}}\dfrac{\partial f}{\partial s_{1}}}{\dfrac{1}{\mu_{2}}\dfrac{\partial f}{\partial s_{2}}}{\dfrac{1}{\mu_{3}}\dfrac{\partial f}{\partial s_{3}}}}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées cartésiennes}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\vect{\nabla}~f = \dfrac{\partial f}{\partial x} \widehat{e_{x}} + \dfrac{\partial f}{\partial y} \widehat{e_{y}} + \dfrac{\partial f}{\partial z} \widehat{e_{z}}\]}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées cylindriques}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\vect{\nabla}~f = \dfrac{\partial f}{\partial \rho} \widehat{e_{\rho}} + \fdrac{1}{\rho}\frac{\partial f}{\partial \varphi} \widehat{e_{\varphi}} + \dfrac{\partial f}{\partial z} \widehat{e_{z}}\]}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées sphériques}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\vect{\nabla}~f = \dfrac{\partial f}{\partial r} \widehat{e_{r}} + \dfrac{1}{r}\frac{\partial f}{\partial \theta} \widehat{e_{\theta}} + \dfrac{1}{r~\sin\theta}\frac{\partial f}{\partial \varphi} \widehat{e_{\varphi}}\]}
+\end{center}
+\hrule
+
+%\newpage
+\vspace*{1cm}
+%-----------------------------------------  DIVERGENCE  -----------------------------------------
+\subsection{Divergence}
+% Formule générale de la divergence
+\begin{center}
+%Définition de la divergence par un flux infinitésimal :
+	%\begin{center}
+		%\fbox{\[div\vect{A} = \displaystyle\lim_{V_{i} \to 0} \dfrac{\displaystyle\varoiint_{S_{i}(V_{i})}{\hspace{-15pt}\vect{A}\vect{\dif S_{i}}}}{V_{i}}\]}
+	%\end{center}
+%Expression générale de la divergence en fonction des coordonnées :
+	\begin{center}
+		\doublebox{\[\vect{\nabla}.\vect{A} = div\vect{A} = \dfrac{1}{\mu_{1}\mu_{2}\mu_{3}} \displaystyle\sum_{PC}^{} \dfrac{\partial}{\partial s_{1}} (\mu_{2}\mu_{3}A_{1})\]}
+	\end{center}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées cartésiennes}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\vect{\nabla}.\vect{A} = \dfrac{\partial A_{x}}{\partial x} + \dfrac{\partial A_{y}}{\partial y} + \dfrac{\partial A_{z}}{\partial z}\]}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées cylindriques}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\vect{\nabla}.\vect{A} = \dfrac{1}{\rho}\dfrac{\partial(\rho~A_{\rho})}{\partial \rho} + \dfrac{1}{\rho}\fdrac{\partial A_{\varphi}}{\partial \varphi} + \dfrac{\partial A_{z}}{\partial z}\]}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées sphériques}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\vect{\nabla}.\vect{A} = \dfrac{1}{r^{2}}\dfrac{\partial(r^{2}~A_{r})}{\partial r} + \dfrac{1}{r~\sin\theta}\dfrac{\partial (\sin\theta~A_{\theta})}{\partial \theta} + \dfrac{1}{r~\sin\theta}\dfrac{\partial A_{\varphi}}{\partial \varphi}\]}
+\end{center}
+
+%-----------------------------------------  ROTATIONNEL  -----------------------------------------
+\newpage
+\subsection{Rotationnel}
+\begin{center}
+%Définition du rotationnel (composante $\widehat{e_{i}}$) par une circulation infinitésimale :
+	%\begin{center}
+		%\fbox{\[\left(\vect{rot}\vect{A}\right).\widehat{e_{i}} = \lim_{S_{i} \to 0} \frac{\displaystyle\oint_{C_{i}(S_{i})}{\hspace{-15pt}\vect{A}\vect{\dif l_{i}}}}{S_{i}}\]}
+	%\end{center}
+%Expression générale du rotationnel en fonction des coordonnées :
+	\begin{center}
+		\doublebox{\[
+			\begin{tabular}{cc|cc|l|c}
+			&$\dfrac{\widehat{e_1}}{\mu_2\mu_3}$&$\dfrac{\partial}{\partial s_1}$&&$\mu_1 A_1$& $~\dfrac{\widehat{e_1}}{\mu_2\mu_3}~\left[\dfrac{\partial(\mu_3 A_3)}{\partial s_2} - \dfrac{\partial(\mu_2 A_2)}{\partial s_3}\right]$ \\[4mm]
+			\vect{\nabla} \wedge \vect{A} = &$\dfrac{\widehat{e_2}}{\mu_1\mu_3}$&$\dfrac{\partial}{\partial s_2}$&$\wedge$&$\mu_2 A_2\quad=$& $~\dfrac{\widehat{e_2}}{\mu_1\mu_3}~\left[\dfrac{\partial(\mu_1 A_1)}{\partial s_3} - \dfrac{\partial(\mu_3 A_3)}{\partial s_1}\right]$ \\[4mm]
+			&$\dfrac{\widehat{e_3}}{\mu_1\mu_2}$&$\dfrac{\partial}{\partial s_3}$&&$\mu_3 A_3$& $~\dfrac{\widehat{e_3}}{\mu_1\mu_2}~\left[\dfrac{\partial(\mu_2 A_2)}{\partial s_1} - \dfrac{\partial(\mu_1 A_1)}{\partial s_2}\right]$ \\[4mm]
+			\end{tabular}\]}
+	\end{center}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées cartésiennes}}
+\end{center}
+\begin{center}
+	\Ovalbox{
+		\begin{tabular}{c|c}
+													  & $~\widehat{e_{x}}~\left[\dfrac{\partial A_{z}}{\partial y} - \dfrac{\partial A_{y}}{\partial z}\right]$ \\[4mm]
+			$\vect{\nabla} \wedge \vect{A}$ = & $~\widehat{e_{y}}~\left[\dfrac{\partial A_{x}}{\partial z} - \dfrac{\partial A_{z}}{\partial x}\right]$ \\[4mm]
+													  & $~\widehat{e_{z}}~\left[\dfrac{\partial A_{y}}{\partial x} - \dfrac{\partial A_{x}}{\partial y}\right]$ \\[4mm]
+		\end{tabular}}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées cylindriques}}
+\end{center}
+
+\begin{center}
+	\Ovalbox{
+		\begin{tabular}{c|c}
+		& $~\widehat{e_{\rho}}~\left[\dfrac{1}{\rho}\dfrac{\partial A_z}{\partial \varphi} - \dfrac{\partial A_{\varphi}}{\partial z}\right]$ \\[4mm]
+		$\vect{\nabla} \wedge \vect{A}$ = &$\widehat{e_{\varphi}}~\left[\dfrac{\partial A_{\rho}}{\partial z}-\dfrac{\partial A_z}{\partial \rho}\right]$ \\[4mm]
+		& $~\widehat{e_z}\dfrac{1}{\rho}~\left[\dfrac{\partial A_{\varphi}}{\partial \rho} - \dfrac{\partial A_{\rho}}{\partial \varphi}\right]$ \\[4mm]
+	\end{tabular}}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées sphériques}}
+\end{center}
+\begin{center}
+\Ovalbox{
+	\begin{tabular}{c|c}
+	&$~\widehat{e_r}\dfrac{1}{r~\sin\theta}~\left[\dfrac{\partial(\sin\theta~A_{\varphi})}{\partial \theta} - \dfrac{\partial A_{\theta}}{\partial \varphi}\right]$ \\[4mm]
+	$\vect{\nabla} \wedge \vect{A}$ = &$~\widehat{e_{\theta}}\dfrac{1}{r~\sin\theta}~\left[\dfrac{\partial A_r}{\partial \varphi} - \sin\theta\dfrac{\partial(r~A_{\varphi})}{\partial r}\right]$ \\[4mm]
+	&$~\widehat{e_{\varphi}}\dfrac{1}{r}~\left[\dfrac{\partial(r~A_{\theta})}{\partial r} - \dfrac{\partial A_r}{\partial \theta}\right]$ \\[4mm]
+	\end{tabular}}
+\end{center}
+
+\newpage
+\subsection{Laplacien d\textquotesingle un champ scalaire}
+Notations de l'opérateur Laplacien: $\Delta$, Lap, $\vect{\nabla^2}$.
+\begin{center}
+	\doublebox{\[\Delta f = div\left(\vect{grad}f\right) =  \dfrac{1}{\mu_1\mu_2\mu_3} \displaystyle\sum_{PC}\dfrac{\partial}{\partial s_1} \left[\dfrac{\mu_2\mu_3}{\mu_1}\dfrac{\partial f}{\partial s_1}\right]\]}
+\end{center}
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées cartésiennes}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\Delta f = \dfrac{\partial^2 f}{\partial x^2} + \dfrac{\partial^2 f}{\partial y^2} + \dfrac{\partial^2 f}{\partial z^2}\]}
+\end{center}
+
+
+\hrule
+\begin{center}
+\underline{\textbf{Coordonnées cylindriques}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\Delta f = \dfrac{1}{\rho}\dfrac{\partial}{\partial \rho}\left(\rho\dfrac{\partial f}{\partial \rho}\right) + \dfrac{1}{\rho^2}\dfrac{\partial^2 f}{\partial \varphi^2} + \dfrac{\partial^2 f}{\partial z^2}\]}
+\end{center}
+
+
+\hrule
+\begin{center}
+	\underline{\textbf{Coordonnées sphériques}}
+\end{center}
+\begin{center}
+	\Ovalbox{\[\Delta f = \dfrac{1}{r}\dfrac{\partial^2}{\partial r^2}(rf) + \dfrac{1}{r^2~\sin\theta}\dfrac{\partial}{\partial \theta}\left(\sin\theta\dfrac{\partial f}{\partial \theta}\right) + \dfrac{1}{r^{2}\sin^{2}\theta}\dfrac{\partial^2 f}{\partial \varphi^2}\]}
+\end{center}
+
+
+\subsection{Laplacien d\textquotesingle un champ vectoriel}
+\begin{center}
+	\doublebox{\[\Delta \vect{A} = \vect{grad}(div \vect{A}) - \vect{rot}\left(\vect{rot} \vect{A}\right)\]}
+\end{center}
+
+\subsection{D'Alembertien}
+\begin{center}
+	\doublebox{\[\square \hspace*{2mm} = \Delta \hspace*{2mm} - \dfrac{1}{c^2}\dfrac{\partial^2}{\partial t^2}\]}
+\end{center}
+
+
+\newpage
+\section{Formulaire relatif aux opérateurs}
+% 1
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+div(\vect{rot}\vect{A}) &=& 0\\[2mm]
+\vect{\nabla}.(\vect{\nabla} \wedge \vect{A}) &=& 0
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 2
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+\vect{rot}(\vect{grad}~f) &=& \vect{0}\\[2mm]
+\vect{\nabla} \wedge (\vect{\nabla}f) &=& \vect{0}
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 3
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+	div(\vect{grad}f) &=& \Delta f\\[2mm]
+	\vect{\nabla}(\vect{\nabla}) &=& \Delta f
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 4
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+\vect{rot}\left(\vect{rot}\vect{A}\right) &=& \vect{grad}(div \vect{A}) - \Delta \vect{A}\\[2mm]
+\vect{\nabla} \wedge (\vect{\nabla} \wedge \vect{A}) &=& \vect{\nabla}(\vect{\nabla}.\vect{A}) - \Delta \vect{A}
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 5
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+\vect{grad}(fg) &=& f\left(\vect{grad}~g\right) + g\left(\vect{grad}~f\right)\\[2mm]
+\vect{\nabla}(fg) &=& f(\vect{\nabla}g) + g(\vect{\nabla}f)
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 6
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+div\left(f\vect{A}\right) &=& f~(div\vect{A}) + \vect{A}(\vect{grad}~f)\\[2mm]
+\vect{\nabla}.(f\vect{A}) &=& f(\vect{\nabla}.\vect{A}) + \vect{A}(\vect{\nabla}f)
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 7
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+\vect{rot}(f\vect{A}) &=& (\vect{grad}~f) \wedge \vect{A} + f~(\vect{rot}\vect{A})\\[2mm]
+\vect{\nabla} \wedge (f\vect{A}) &=& (\vect{\nabla}f) \wedge \vect{A} + f(\vect{\nabla} \wedge \vect{A})
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 8
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+div\left(\vect{A} \wedge \vect{B}\right) &=& \vect{B}(\vect{rot}\vect{A}) - \vect{A}(\vect{rot}\vect{B})\\[2mm]
+\vect{\nabla}.(\vect{A} \wedge \vect{B}) &=& \vect{B}(\vect{\nabla} \wedge \vect{A}) - \vect{A}(\vect{\nabla} \wedge \vect{B})
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 9
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+\vect{rot}\left(\vect{A} \wedge \vect{B}\right) &=& (div\vect{B})\vect{A} - (div\vect{A})\vect{B} + (\vect{B}\vect{grad})\vect{A} - (\vect{A}\vect{grad})\vect{B}\\[2mm]
+\vect{\nabla} \wedge (\vect{A} \wedge \vect{B}) &=& (\vect{\nabla}.\vect{B})\vect{A} - (\vect{\nabla}.\vect{A})\vect{B} + (\vect{B}\vect{\nabla})\vect{A} + (\vect{A}\vect{\nabla})\vect{B}
+\end{array}
+\right.
+\end{equation}
+\hrule
+% 10
+\begin{equation}
+\left\{
+\begin{array}{r c l}
+\vect{grad}(\vect{A}\vect{B}) &=& \vect{A} \wedge (\vect{rot}\vect{B}) + \vect{B} \wedge \vect{rot}\vect{A} + (\vect{A}\vect{grad})\vect{B} + (\vect{B}\vect{grad})\vect{A}\\[2mm]
+\vect{\nabla}(\vect{A}\vect{B}) &=& \vect{A} \wedge (\vect{\nabla} \wedge \vect{B}) + \vect{B} \wedge (\vect{\nabla} \wedge \vect{A}) +( \vect{A}\vect{\nabla})\vect{B} + (\vect{B}\vect{\nabla})\vect{A}
+\end{array}
+\right.
+\end{equation}
+\hrule
+
+
+\newpage
+\section{Théorèmes intégraux}
+
+\subsection{Théorème de Gauss}
+\begin{equation*}
+\varoiint_{S} {\vect{E}\vect{\dif s}} = \frac{Q_{int}}{\epsilon_{0}}
+\end{equation*}
+
+\subsection{Théorème d'Ampère}
+\begin{equation*}
+\oint_{C} {\vect{B}\vect{\dif l}} = \mu_{0}\sum{I_{enlacés}}
+\end{equation*}
+
+\subsection{Théorème de Stokes}
+\begin{center}
+\[\oint_{C}{\vect{E}\vect{\dif l}} = \iint_{S}{\vect{rot}\left[\vect{E}(M)\right]\vect{\dif s}}\]
+\end{center}
+
+\subsection{Théorème de Kelvin}
+\begin{center}
+Equivalent du théorème de Stokes pour les fonctions scalaires
+\[\oint_{C}{f(M)}\vect{\dif l} = \iint_{S}{\vect{\dif s}} \wedge \vect{grad}~f(M)\]
+\end{center}
+
+\subsection{Théorème d'Ostrogradski}
+\begin{center}
+\[\iiint_{V}{div\left[\vect{E}(M)\right]}\dif V = \varoiint_{S}{\vect{E}(M)\vect{\dif s}}\]
+\end{center}
+
+\subsection{Théorème du gradiant}
+\begin{center}
+Equivalent du théorème d'Ostrogradski pour les fonctions scalaires
+\[\iiint_{V}{\vect{grad}\left[f(M)\right]}\dif V = \varoiint_{S}{f(M)\vect{\dif s}}\]
+\end{center}
+
+\subsection{Théorème du rotationnel}
+\begin{center}
+\[\varoiint_{S}{\vect{E}(M) \wedge \vect{\dif s}} = -\iiint_{S}{\vect{rot}\left[\vect{E}(M)\right]\dif V}\]
+\end{center}
+
+\section{Rappel: double produit vectoriel}
+\[\vect{A} \wedge (\vect{B} \wedge \vect{C}) = \vect{B}(\vect{A}\vect{C}) - \vect{C}(\vect{A}\vect{B})\]
+
+
+\newpage
+\section{Équations}
+
+\subsection{Loi d'Ohm local}
+
+\begin{equation*}
+\vec{\jmath} = \sigma \vect{E}
+\end{equation*}
+\begin{center}Où $\sigma$ est la conductivité électrique du matériau\end{center}
+
+\subsection{Équation de conservation de la charge}
+
+\begin{equation*}
+\frac{\partial \rho}{\partial t} + div(\vec{\jmath}) = 0
+\end{equation*}
+
+\subsection{Équations de Maxwell (dans le vide)}
+\begin{center}
+	% remplir le tableau des 4 equations de maxwell avec leurs noms en dessous
+	\begin{tabular}{c|c}
+	$div(\vect{E}) =  \frac{\rho}{\epsilon_{0}}$ & $\vect{rot}(\vect{E}) = -\frac{\partial \vect{B}}{\partial t}$ \\[2mm]
+	(Maxwell-Gauss) & (Maxwell-Faraday) \\[2mm]
+	\hline
+	 & \\[0.5mm]
+	$div(\vect{B}) = 0$ & $\vect{rot}(\vect{B}) = \mu_{0}\vect{J} + \frac{1}{c^{2}}\frac{\partial \vect{E}}{\partial t}$ \\[2mm]
+	(Maxwell-Flux) & (Maxwell-Ampère) 
+	\end{tabular}
+\end{center}
+
+\subsection{Expression des champs Électrique et Magnétique}
+Expression du champ au point M selon la distribution de source $\mathcal{D}$.
+\begin{align*}
+	\vect{E}(M) =& \dfrac{1}{4\pi \epsilon_0}\displaystyle\iiint_{\mathcal{D}}{\rho(P) \dfrac{\vect{PM}}{PM^3}}\dif\tau(P)\\
+	\vect{B}(M) =& \dfrac{\mu_0}{4\pi}\displaystyle\iiint_{\mathcal{D}}{\dfrac{\vec\jmath~(P) \wedge \vect{PM}}{PM^3}}\dif\tau(P)
+\end{align*}
+
+\subsection{Lien entre champ et potentiel}
+\begin{center}
+Soit $\vect{E}$ (resp. $\vect{B}$) un champ électrique (resp. magnétique) et V (resp. $\vect{A}$) un potentiel électrique \\
+(resp. magnétique) associé à $\vect{E}$ (resp. à $\vect{B}$).
+\end{center}
+\begin{align*}
+	\vect{E} =& -\vect{grad}~V - \frac{\partial \vect{A}}{\partial t}\\
+	\vect{B} =& ~rot(\vect{A})
+\end{align*}
+
+
+\subsection{Équations de Poisson pour le potentiel scalaire/vecteur}
+\begin{align*}
+	\Delta V =& -\frac{\rho}{\epsilon_{0}}\\
+	\Delta \vect{A}  =& -\mu_{0}\vec{\jmath}
+\end{align*}
+
+
+\newpage
+\section{Équation de Maxwell en régime lentement variable: \\Induction}
+
+\subsection{Rappels}
+\begin{itemize}
+	\item $div\vect{B} = 0$ (car $\vect{B} = \vect{rot}\vect{A}$)\\[3mm]
+	\item $\vect{rot}\vect{B} = \mu_0 \vec{\jmath}$ \\[1mm]
+	\item Biot et Savart : $\vect{B}(M) = \dfrac{\mu_0}{4\pi}\displaystyle\iiint_{\mathcal{D}}{\dfrac{\vec\jmath~(P) \wedge \vect{PM}}{PM^3}}\dif\tau(P)$
+\end{itemize}
+
+\subsection{Force de Lorentz}
+\begin{equation*}
+\vect{F} = q\vect{E} + q\vect{v} \wedge \vect{B}
+\end{equation*}
+
+\subsection{Force de Laplace}
+La force de Laplace est la résultante de toutes les forces de Lorentz sur les charges mobiles.
+\begin{equation*}
+\vect{\dif F} = I\vect{\dif l} \wedge \vect{B}
+\end{equation*}
+Cette force agit directement sur les charges fixes du matériaux (ex. protons)
+
+\subsection{Loi de Lenz}
+\begin{law}[Loi de Lenz]
+	Les conséquences de l'induction s'opposent aux causes qui lui donne naissance.
+\end{law}
+
+\subsection{Force électromotrice}
+\begin{law}[Loi de Faraday]
+	Soit $\phi$ un flux magnétique alors la force électromotrice (induite) e est égale à l'opposer de la variation temporelle du flux magnétique.
+	\[e = -\frac{\dif \phi}{\dif t}\]
+	(Cette loi n'est pas toujours valide notamment lors de circuit à contact glissant)
+\end{law}
+On peut aussi écrire cette f.e.m (écriture toujours valide) :
+\begin{align*}
+	e &= \int_{Circuit}{\hspace{-6.5mm}\vect{E_m}~\vect{\dif l}}\\
+	\text{tel que}\quad \vect{E_m} &= \vect{v} \wedge \vect{B} - \frac{\partial \vect{A}}{\partial t}
+\end{align*}
+Où $\vect{E_m}$ est le champ \underline{électromoteur} (induit) le long du circuit
+
+
+\subsection{Potentiels et choix de jauge}
+\subsubsection{Choix de jauge}
+
+\begin{proposition}[Jauge de Lorentz]
+Soit V et $\vect{A}$ un potentiel scalaire et vecteur. On impose donc :
+\[div \vect{A} + \dfrac{1}{c^2}\dfrac{\partial V}{\partial t} = 0\]
+\end{proposition}
+
+\begin{proposition}[Jauge de Coulomb]
+Soit $\vect{A}$ un potentiel vecteur. On impose donc :
+\[div \vect{A} = 0\]
+\end{proposition}
+
+\subsubsection{D'Alembertiens des Potentiels}
+En Jauge de Lorentz en retrouve les équation de Poisson.
+\begin{align*}
+	\square V &= -\dfrac{\rho}{\epsilon_0}\\
+	\square \vect{A} &= -\mu_0 \vec{\jmath}
+\end{align*}
+
+\subsubsection{D'Alembertiens des Champs Électriques et Magnétiques}
+Équation de D'Alembert du champ Électrique et Magnétique.
+\begin{align*}
+	\square \vect{E} &= \vect{0}\\
+	\square \vect{B} &= \vect{0}
+\end{align*}
+
+
+
+
+\end{document}
+
+
+
